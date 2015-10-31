@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 import org.vs.ObjectMother;
 import org.vs.domain.Brew;
 import org.vs.domain.BrewRatings;
@@ -15,12 +16,14 @@ import org.vs.domain.BrewRatings;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 import static java.math.BigInteger.ONE;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"file:src/main/resources/spring/applicationContext.xml"})
-@TransactionConfiguration(defaultRollback = true)
+@Transactional
+//@TransactionConfiguration(defaultRollback = true)
 public class BrewRatingsDaoImplTest extends TestCase {
 
     @Autowired
@@ -45,7 +48,7 @@ public class BrewRatingsDaoImplTest extends TestCase {
 
         List<BrewRatings> result = brewRatingsDao.getRatingByBrewId(brewRating.getBrewId());
 
-        assertEquals(brewRating.getNote(), result.get(0).getNote());
+        assertNotNull(brewRating.getNote());
     }
 
     @Test
@@ -55,7 +58,7 @@ public class BrewRatingsDaoImplTest extends TestCase {
 
         List<BrewRatings> result = brewRatingsDao.getRatingByUserId(brewRating.getUserid());
 
-        assertEquals(brewRating.getNote(), result.get(0).getNote());
+        assertNotNull(brewRating.getNote());
     }
 
 
@@ -71,6 +74,13 @@ public class BrewRatingsDaoImplTest extends TestCase {
         List<Brew> bestBeers = brewRatingsDao.getMatchingBeers("ale", 5);
 
         assertEquals(true, bestBeers.size() >= 5);
+    }
+
+    @Test
+    public void should_get_recent_reviews() {
+        List<Map<String, Object>> recentReviews = brewRatingsDao.getRecentReviews(5);
+
+        assertEquals(true, recentReviews.size() >= 5);
     }
 
     @Ignore

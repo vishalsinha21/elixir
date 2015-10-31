@@ -10,4 +10,9 @@ brewControllers.controller('TopBrewListCtrl', ['$scope', '$http', function ($sco
     $scope.brews = data;
   });
 
+  $http.get('brew/recent').success(function (data) {
+    $scope.reviews = data;
+  });
+  
 }]);
+

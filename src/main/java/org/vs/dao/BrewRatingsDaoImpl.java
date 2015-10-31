@@ -1,5 +1,6 @@
 package org.vs.dao;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class BrewRatingsDaoImpl {
@@ -47,8 +49,8 @@ public class BrewRatingsDaoImpl {
         input.addValue("floral", brewRatings.getFloral().intValue());
         input.addValue("herbal", brewRatings.getHerbal().intValue());
         input.addValue("hoppy", brewRatings.getHoppy().intValue());
-        input.addValue("createdon", new Date());
-        input.addValue("updatedon", new Date());
+        input.addValue("createdon", brewRatings.getCreatedOn() !=null ? brewRatings.getCreatedOn().toDate() : new Date());
+        input.addValue("updatedon", brewRatings.getUpdatedOn() !=null ? brewRatings.getUpdatedOn().toDate() : new Date());
 
         namedJdbcTemplate.update(sql, input);
     }
@@ -85,6 +87,17 @@ public class BrewRatingsDaoImpl {
         return jdbcTemplate.query(SQL, new BrewMapper(), query, limit);
     }
     
+    public List<Map<String, Object>> getRecentReviews(int limit) {
+        String SQL = "select *\n" +
+                "from brew, enduser,\n" +
+                "(select * from brewratings\n" +
+                "order by createdon desc\n" +
+                "limit ?) ratings\n" +
+                "where brew.id = ratings.brewid\n" +
+                "and enduser.id = ratings.userid";
+        return jdbcTemplate.queryForList(SQL, limit);
+    }
+
     private class BrewRatingsRowMapper implements RowMapper<BrewRatings> {
         @Override
         public BrewRatings mapRow(ResultSet rs, int rowNum) throws SQLException {

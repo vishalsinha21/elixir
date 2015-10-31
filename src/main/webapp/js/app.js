@@ -10,11 +10,11 @@ var brewApp = angular.module('brewApp', [
 brewApp.config(['$routeProvider',
   function ($routeProvider) {
     $routeProvider.
-        when('/brew', {
+        when('/brews', {
           templateUrl: 'main.html',
           controller: 'TopBrewListCtrl'
         }).
         otherwise({
-          redirectTo: '/brew'
+          redirectTo: '/brews'
         });
   }]);

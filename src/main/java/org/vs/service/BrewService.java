@@ -7,6 +7,7 @@ import org.vs.domain.Brew;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class BrewService {
@@ -30,4 +31,8 @@ public class BrewService {
         return ratingsDao.getMatchingBeers(query, 10);
     }
 
+    public List<Map<String, Object>> getRecentReviews() {
+        return ratingsDao.getRecentReviews(5);
+    }
+    
 }

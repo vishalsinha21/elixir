@@ -11,6 +11,7 @@ import org.vs.domain.Brew;
 import org.vs.service.BrewService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class BrewWebResource {
@@ -32,6 +33,12 @@ public class BrewWebResource {
     public ResponseEntity<List<Brew>> getMatchingBeers(@PathVariable String query) {
         List<Brew> bestBeers = brewService.getMatchingBeers(query);
         return new ResponseEntity<List<Brew>>(bestBeers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/brew/recent", method = RequestMethod.GET)
+    public ResponseEntity<List<Map<String, Object>>> getRecentReviews() {
+        List<Map<String, Object>> recentReviews = brewService.getRecentReviews();
+        return new ResponseEntity<List<Map<String, Object>>>(recentReviews, HttpStatus.OK);
     }
 
 }

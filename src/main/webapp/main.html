@@ -27,6 +27,28 @@
                     </tbody>
                 </table>
 
+                <hr>
+                
+                <h2>Recent Reviews</h2>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Brew</th>
+                        <th>Rating</th>
+                        <th>Note</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="review in reviews">
+                        <td>{{review.emailid}}</td>
+                        <td>{{review.brewname}}</td>
+                        <td>{{review.rating}}</td>
+                        <td>{{review.note}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
             </div>
         </div>
     </div>
