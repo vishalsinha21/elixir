@@ -2,11 +2,11 @@
 
 /* Controllers */
 
-var brewApp = angular.module('brewApp', []);
+var brewControllers = angular.module('brewControllers', []);
 
-brewApp.controller('TopBrewListCtrl', ['$scope', '$http', function($scope, $http) {
+brewControllers.controller('TopBrewListCtrl', ['$scope', '$http', function ($scope, $http) {
 
-  $http.get('brew/best').success(function(data) {
+  $http.get('brew/best').success(function (data) {
     $scope.brews = data;
   });
 

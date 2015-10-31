@@ -5,46 +5,13 @@
     <title></title>
     <link rel="stylesheet" href="css/bootstrap.css">
     <script src="js/lib/angular.js"></script>
+    <script src="js/lib/angular-route.js"></script>
+    <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
 </head>
 
-<body ng-controller="TopBrewListCtrl">
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <h1>Elixir</h1>
-            <hr/>
-            <div class="page">
-
-                <h2>Best Brews</h2>
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Brew</th>
-                        <th>Type</th>
-                        <th>Abv</th>
-                        <th>Style</th>
-                        <th>Rating</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="brew in brews">
-                        <td>{{brew.brewName}}</td>
-                        <td>{{brew.brewType}}</td>
-                        <td>{{brew.abv}}</td>
-                        <td>{{brew.style}}</td>
-                        <td>{{brew.rating}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
+<body>
+<div ng-view></div>
 </body>
 
 </html>

@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <h1>Elixir</h1>
+            <hr/>
+            <div class="page">
+
+                <h2>Best Brews</h2>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Brew</th>
+                        <th>Type</th>
+                        <th>Abv</th>
+                        <th>Style</th>
+                        <th>Rating</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="brew in brews">
+                        <td>{{brew.brewName}}</td>
+                        <td>{{brew.brewType}}</td>
+                        <td>{{brew.abv}}</td>
+                        <td>{{brew.style}}</td>
+                        <td>{{brew.rating}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
