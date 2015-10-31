@@ -30,9 +30,9 @@ public class BrewWebResource {
     }
 
     @RequestMapping(value = "/brew/match/{query}", method = RequestMethod.GET)
-    public ResponseEntity<List<Brew>> getMatchingBeers(@PathVariable String query) {
-        List<Brew> bestBeers = brewService.getMatchingBeers(query);
-        return new ResponseEntity<List<Brew>>(bestBeers, HttpStatus.OK);
+    public ResponseEntity<List<Map<String, Object>>> getMatchingBeers(@PathVariable String query) {
+        List<Map<String, Object>> bestBeers = brewService.getMatchingBeers(query);
+        return new ResponseEntity<List<Map<String, Object>>>(bestBeers, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/brew/recent", method = RequestMethod.GET)

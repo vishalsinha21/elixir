@@ -1,6 +1,5 @@
 package org.vs.dao;
 
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -49,8 +48,8 @@ public class BrewRatingsDaoImpl {
         input.addValue("floral", brewRatings.getFloral().intValue());
         input.addValue("herbal", brewRatings.getHerbal().intValue());
         input.addValue("hoppy", brewRatings.getHoppy().intValue());
-        input.addValue("createdon", brewRatings.getCreatedOn() !=null ? brewRatings.getCreatedOn().toDate() : new Date());
-        input.addValue("updatedon", brewRatings.getUpdatedOn() !=null ? brewRatings.getUpdatedOn().toDate() : new Date());
+        input.addValue("createdon", brewRatings.getCreatedOn() != null ? brewRatings.getCreatedOn().toDate() : new Date());
+        input.addValue("updatedon", brewRatings.getUpdatedOn() != null ? brewRatings.getUpdatedOn().toDate() : new Date());
 
         namedJdbcTemplate.update(sql, input);
     }
@@ -81,12 +80,12 @@ public class BrewRatingsDaoImpl {
         return jdbcTemplate.query(SQL, new BrewRowMapper(), limit);
     }
 
-    public List<Brew> getMatchingBeers(String query, int limit) {
+    public List<Map<String, Object>> getMatchingBeers(String query, int limit) {
         query = query + "%";
         String SQL = "select * from brew where lower(brewname) like ? limit ?";
-        return jdbcTemplate.query(SQL, new BrewMapper(), query, limit);
+        return jdbcTemplate.queryForList(SQL, query, limit);
     }
-    
+
     public List<Map<String, Object>> getRecentReviews(int limit) {
         String SQL = "select *\n" +
                 "from brew, enduser,\n" +
@@ -132,18 +131,6 @@ public class BrewRatingsDaoImpl {
         }
     }
 
-    private class BrewMapper implements RowMapper<Brew> {
-        @Override
-        public Brew mapRow(ResultSet rs, int rowNum) throws SQLException {
-            Brew brew = new Brew();
-            brew.setId(BigInteger.valueOf(rs.getLong("id")));
-            brew.setBrewName(rs.getString("brewname"));
-            brew.setBrewType(rs.getString("brewtype"));
-            brew.setAbv(BigDecimal.valueOf(rs.getDouble("abv")));
-            brew.setStyle(rs.getString("style"));
-            return brew;
-        }
-    }
 }
 
 

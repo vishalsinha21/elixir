@@ -23,16 +23,16 @@ public class BrewService {
         return ratingsDao.getBestBeers(5);
     }
 
-    public List<Brew> getMatchingBeers(String query) {
-        if(query.trim().length() < 3) {
-            return new ArrayList<Brew>();
+    public List<Map<String, Object>> getMatchingBeers(String query) {
+        if (query.trim().length() < 3) {
+            return new ArrayList<Map<String, Object>>();
         }
-        
+
         return ratingsDao.getMatchingBeers(query, 10);
     }
 
     public List<Map<String, Object>> getRecentReviews() {
         return ratingsDao.getRecentReviews(5);
     }
-    
+
 }

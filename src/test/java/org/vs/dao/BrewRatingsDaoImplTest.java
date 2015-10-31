@@ -7,7 +7,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import org.vs.ObjectMother;
 import org.vs.domain.Brew;
@@ -48,39 +47,17 @@ public class BrewRatingsDaoImplTest extends TestCase {
 
         List<BrewRatings> result = brewRatingsDao.getRatingByBrewId(brewRating.getBrewId());
 
-        assertNotNull(brewRating.getNote());
+        assertEquals(brewRating.getNote(), result.get(0).getNote());
     }
 
     @Test
     public void should_get_all_ratings_by_user_id() {
-        BrewRatings brewRating = ObjectMother.getBrewRating(new BigInteger("7777777777"), ONE, ONE, "great note", new BigDecimal(4.5), ONE, ONE, ONE, ONE, ONE, ONE);
+        BrewRatings brewRating = ObjectMother.getBrewRating(new BigInteger("7777777"), ONE, ONE, "great note", new BigDecimal(4.5), ONE, ONE, ONE, ONE, ONE, ONE);
         brewRatingsDao.saveRating(brewRating);
 
         List<BrewRatings> result = brewRatingsDao.getRatingByUserId(brewRating.getUserid());
 
-        assertNotNull(brewRating.getNote());
-    }
-
-
-    @Test
-    public void should_get_top_five_beers() {
-        List<Brew> bestBeers = brewRatingsDao.getBestBeers(5);
-
-        assertEquals(5, bestBeers.size());
-    }
-    
-    @Test
-    public void should_get_matching_beers() {
-        List<Brew> bestBeers = brewRatingsDao.getMatchingBeers("ale", 5);
-
-        assertEquals(true, bestBeers.size() >= 5);
-    }
-
-    @Test
-    public void should_get_recent_reviews() {
-        List<Map<String, Object>> recentReviews = brewRatingsDao.getRecentReviews(5);
-
-        assertEquals(true, recentReviews.size() >= 5);
+        assertEquals(brewRating.getNote(), result.get(0).getNote());
     }
 
     @Ignore

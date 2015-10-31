@@ -88,17 +88,17 @@ public class ObjectMother {
                                             BigInteger hoppy) {
         BrewRatings brewRating = new BrewRatings();
 
-        brewRating.setUserid(BigInteger.ONE);
-        brewRating.setBrewId(BigInteger.ONE);
-        brewRating.setRating(BigInteger.ONE);
-        brewRating.setNote("note");
-        brewRating.setAlcohol(BigDecimal.valueOf(4.5));
-        brewRating.setBitter(BigInteger.ONE);
-        brewRating.setBody(BigInteger.ONE);
-        brewRating.setCitrus(BigInteger.ONE);
-        brewRating.setFloral(BigInteger.ONE);
-        brewRating.setHerbal(BigInteger.ONE);
-        brewRating.setHoppy(BigInteger.ONE);
+        brewRating.setUserid(userId);
+        brewRating.setBrewId(brewId);
+        brewRating.setRating(rating);
+        brewRating.setNote(note);
+        brewRating.setAlcohol(alcohol);
+        brewRating.setBitter(bitter);
+        brewRating.setBody(body);
+        brewRating.setCitrus(citrus);
+        brewRating.setFloral(floral);
+        brewRating.setHerbal(herbal);
+        brewRating.setHoppy(hoppy);
 
         return brewRating;
     }
