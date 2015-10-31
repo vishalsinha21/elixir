@@ -35,7 +35,7 @@ public class BrewRatingsDaoImplTest extends TestCase {
         brewRatingsDao.saveRating(brewRating);
         brewRatingsDao.saveRating(brewRating);
 
-        List<BrewRatings> allRatings = brewRatingsDao.getAllRatings();
+        List<Map<String, Object>> allRatings = brewRatingsDao.getAllRatings();
 
         assertEquals(true, allRatings.size() >= 3);
     }
@@ -45,9 +45,9 @@ public class BrewRatingsDaoImplTest extends TestCase {
         BrewRatings brewRating = ObjectMother.getBrewRating(ONE, new BigInteger("9999999"), ONE, "note", new BigDecimal(4.5), ONE, ONE, ONE, ONE, ONE, ONE);
         brewRatingsDao.saveRating(brewRating);
 
-        List<BrewRatings> result = brewRatingsDao.getRatingByBrewId(brewRating.getBrewId());
+        List<Map<String, Object>> result = brewRatingsDao.getRatingByBrewId(brewRating.getBrewId());
 
-        assertEquals(brewRating.getNote(), result.get(0).getNote());
+        assertEquals(brewRating.getNote(), result.get(0).get("note"));
     }
 
     @Test
@@ -55,9 +55,9 @@ public class BrewRatingsDaoImplTest extends TestCase {
         BrewRatings brewRating = ObjectMother.getBrewRating(new BigInteger("7777777"), ONE, ONE, "great note", new BigDecimal(4.5), ONE, ONE, ONE, ONE, ONE, ONE);
         brewRatingsDao.saveRating(brewRating);
 
-        List<BrewRatings> result = brewRatingsDao.getRatingByUserId(brewRating.getUserid());
+        List<Map<String, Object>> result = brewRatingsDao.getRatingByUserId(brewRating.getUserid());
 
-        assertEquals(brewRating.getNote(), result.get(0).getNote());
+        assertEquals(brewRating.getNote(), result.get(0).get("note"));
     }
 
     @Ignore

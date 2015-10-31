@@ -19,7 +19,7 @@ public class BrewService {
         this.ratingsDao = ratingsDao;
     }
 
-    public List<Brew> getBestBeers() {
+    public List<Map<String, Object>> getBestBeers() {
         return ratingsDao.getBestBeers(5);
     }
 

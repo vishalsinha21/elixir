@@ -24,9 +24,9 @@ public class BrewWebResource {
     }
 
     @RequestMapping(value = "/brew/best", method = RequestMethod.GET)
-    public ResponseEntity<List<Brew>> getBestBeers() {
-        List<Brew> bestBeers = brewService.getBestBeers();
-        return new ResponseEntity<List<Brew>>(bestBeers, HttpStatus.OK);
+    public ResponseEntity<List<Map<String, Object>>> getBestBeers() {
+        List<Map<String, Object>> bestBeers = brewService.getBestBeers();
+        return new ResponseEntity<List<Map<String, Object>>>(bestBeers, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/brew/match/{query}", method = RequestMethod.GET)

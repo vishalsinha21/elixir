@@ -54,22 +54,22 @@ public class BrewRatingsDaoImpl {
         namedJdbcTemplate.update(sql, input);
     }
 
-    public List<BrewRatings> getRatingByBrewId(BigInteger brewId) {
+    public List<Map<String, Object>> getRatingByBrewId(BigInteger brewId) {
         String SQL = "SELECT * FROM brewratings where brewid = ?";
-        return jdbcTemplate.query(SQL, new BrewRatingsRowMapper(), brewId.longValue());
+        return jdbcTemplate.queryForList(SQL, brewId.longValue());
     }
 
-    public List<BrewRatings> getRatingByUserId(BigInteger userId) {
+    public List<Map<String, Object>> getRatingByUserId(BigInteger userId) {
         String SQL = "SELECT * FROM brewratings where userid = ?";
-        return jdbcTemplate.query(SQL, new BrewRatingsRowMapper(), userId.longValue());
+        return jdbcTemplate.queryForList(SQL, userId.longValue());
     }
 
-    public List<BrewRatings> getAllRatings() {
+    public List<Map<String, Object>> getAllRatings() {
         String SQL = "SELECT * FROM brewratings";
-        return jdbcTemplate.query(SQL, new BrewRatingsRowMapper());
+        return jdbcTemplate.queryForList(SQL);
     }
 
-    public List<Brew> getBestBeers(int limit) {
+    public List<Map<String, Object>> getBestBeers(int limit) {
         String SQL = "select id, brewname, brewtype, abv, style, rating from brew, \n" +
                 "(select brewid, round(avg(rating),1) rating \n" +
                 "from brewratings \n" +
@@ -77,7 +77,7 @@ public class BrewRatingsDaoImpl {
                 "order by rating desc) br \n" +
                 "where brew.id = br.brewid \n" +
                 "limit ?";
-        return jdbcTemplate.query(SQL, new BrewRowMapper(), limit);
+        return jdbcTemplate.queryForList(SQL, limit);
     }
 
     public List<Map<String, Object>> getMatchingBeers(String query, int limit) {
@@ -95,40 +95,6 @@ public class BrewRatingsDaoImpl {
                 "where brew.id = ratings.brewid\n" +
                 "and enduser.id = ratings.userid";
         return jdbcTemplate.queryForList(SQL, limit);
-    }
-
-    private class BrewRatingsRowMapper implements RowMapper<BrewRatings> {
-        @Override
-        public BrewRatings mapRow(ResultSet rs, int rowNum) throws SQLException {
-            BrewRatings brewRatings = new BrewRatings();
-            brewRatings.setId(BigInteger.valueOf(rs.getLong("id")));
-            brewRatings.setBrewId(BigInteger.valueOf(rs.getLong("brewid")));
-            brewRatings.setUserid(BigInteger.valueOf(rs.getLong("userid")));
-            brewRatings.setRating(BigInteger.valueOf(rs.getLong("rating")));
-            brewRatings.setNote(rs.getString("note"));
-            brewRatings.setAlcohol(BigDecimal.valueOf(rs.getDouble("alcohol")));
-            brewRatings.setBitter(BigInteger.valueOf(rs.getLong("bitter")));
-            brewRatings.setBody(BigInteger.valueOf(rs.getLong("body")));
-            brewRatings.setCitrus(BigInteger.valueOf(rs.getLong("citrus")));
-            brewRatings.setFloral(BigInteger.valueOf(rs.getLong("floral")));
-            brewRatings.setHerbal(BigInteger.valueOf(rs.getLong("herbal")));
-            brewRatings.setHoppy(BigInteger.valueOf(rs.getLong("hoppy")));
-            return brewRatings;
-        }
-    }
-
-    private class BrewRowMapper implements RowMapper<Brew> {
-        @Override
-        public Brew mapRow(ResultSet rs, int rowNum) throws SQLException {
-            Brew brew = new Brew();
-            brew.setId(BigInteger.valueOf(rs.getLong("id")));
-            brew.setBrewName(rs.getString("brewname"));
-            brew.setBrewType(rs.getString("brewtype"));
-            brew.setAbv(BigDecimal.valueOf(rs.getDouble("abv")));
-            brew.setStyle(rs.getString("style"));
-            brew.setRating(BigDecimal.valueOf(rs.getDouble("rating")));
-            return brew;
-        }
     }
 
 }
